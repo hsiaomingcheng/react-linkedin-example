@@ -17,3 +17,7 @@
 2020/11/4  
 icon 使用 iconfont 的 svg 圖檔  
 使用 style-component 的 themeProvider + GlobalStyle 達到樣式切換效果[範例](https://github.com/styled-components/styled-components/pull/1493)
+
+2020/11/5
+新增 i18n 架構
+樣板顏色抽出管理
