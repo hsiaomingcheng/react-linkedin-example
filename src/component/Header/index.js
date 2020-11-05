@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { Menu, Switch, Dropdown } from 'antd';
@@ -11,7 +11,7 @@ import Moon from '@icon/header/moon.svg';
 import Sun from '@icon/header/sun.svg';
 import { useTranslation } from 'react-i18next';
 
-const langList = ['zh-TW', 'zh-CN', 'en-US'];
+const langList = ['zh-TW', 'zh-CN', 'en-US']; // 之後可以提到外層，作為外層所傳入的props，(或是模擬後端傳來的api語系清單)
 
 const menuList = [
     {
@@ -51,6 +51,15 @@ function Header(props) {
     const location = useLocation();
     const { t, i18n } = useTranslation();
 
+    // useEffect(() => {
+    //     // console.log('i18n', i18n);
+    //     // setCurrentLang(t(`lang.${i18n.language}`));
+    // });
+
+    const [currentLang, setCurrentLang] = useState(
+        i18n.language || t('lang.zh-TW')
+    );
+
     // 判斷如果pathname為/，就帶入'home'，其他則把pathname最前面的/移除
     const [current, setCurrent] = useState(
         !location.pathname.replace('/', '')
@@ -82,6 +91,7 @@ function Header(props) {
                 onClick={(e) => setCurrent(e.key)}
                 selectedKeys={[current]}
                 mode="horizontal"
+                triggerSubMenuAction="click"
             >
                 {menuList.map((item) => {
                     return (
@@ -90,6 +100,20 @@ function Header(props) {
                         </Menu.Item>
                     );
                 })}
+                <Menu.SubMenu
+                    key="SubMenu"
+                    icon={<SettingOutlined />}
+                    title="Navigation Three - Submenu"
+                >
+                    <Menu.ItemGroup title="Item 1">
+                        <Menu.Item key="setting:1">Option 1</Menu.Item>
+                        <Menu.Item key="setting:2">Option 2</Menu.Item>
+                    </Menu.ItemGroup>
+                    <Menu.ItemGroup title="Item 2">
+                        <Menu.Item key="setting:3">Option 3</Menu.Item>
+                        <Menu.Item key="setting:4">Option 4</Menu.Item>
+                    </Menu.ItemGroup>
+                </Menu.SubMenu>
             </Menu>
 
             <Switch
@@ -100,7 +124,7 @@ function Header(props) {
             />
 
             <Dropdown overlay={lngMenu} trigger="click">
-                <div>切換語系</div>
+                <div>{currentLang}</div>
             </Dropdown>
         </HeaderContainer>
     );
@@ -110,8 +134,16 @@ export default Header;
 
 const HeaderContainer = styled.div`
     display: flex;
+    padding: 0 30px;
+    background: ${(props) => props.theme.header.backgroundColor};
+
+    .ant-menu-horizontal {
+        border-bottom: none;
+        background: none;
+    }
 
     .ant-menu-horizontal > .ant-menu-item a,
+    .ant-menu-submenu-title,
     .anticon {
         color: ${(props) => props.theme.primaryTextColor};
     }
