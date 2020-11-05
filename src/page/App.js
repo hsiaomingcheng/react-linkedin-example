@@ -3,6 +3,7 @@ import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import { routes } from '@route';
 import { GlobalStyle } from '@assets/css/GlobalStyle';
 import { ThemeProvider } from 'styled-components';
+import theme from '@assets/theme';
 import Header from '@component/Header';
 
 function Page(props) {
@@ -14,17 +15,6 @@ function Page(props) {
 }
 
 function App() {
-    const theme = {
-        light: {
-            backgroundColor: '#f5f5f5',
-            primaryColor: '#000',
-        },
-        dark: {
-            backgroundColor: '#232323',
-            primaryColor: '#c4c4c4',
-        },
-    };
-
     const [themeSkin, setThemeSkin] = useState(true);
 
     function handleSkinChange(e) {

@@ -61,6 +61,6 @@ const HeaderContainer = styled.div`
     display: flex;
 
     .ant-menu-horizontal > .ant-menu-item a {
-        color: ${(props) => props.theme.primaryColor};
+        color: ${(props) => props.theme.primaryTextColor};
     }
 `;
