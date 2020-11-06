@@ -51,14 +51,7 @@ function Header(props) {
     const location = useLocation();
     const { t, i18n } = useTranslation();
 
-    // useEffect(() => {
-    //     // console.log('i18n', i18n);
-    //     // setCurrentLang(t(`lang.${i18n.language}`));
-    // });
-
-    const [currentLang, setCurrentLang] = useState(
-        i18n.language || t('lang.zh-TW')
-    );
+    const [currentLang, setCurrentLang] = useState(t('lang.zh-TW'));
 
     // 判斷如果pathname為/，就帶入'home'，其他則把pathname最前面的/移除
     const [current, setCurrent] = useState(
@@ -70,6 +63,7 @@ function Header(props) {
     // 切換語系事件
     const changeLanguage = (lng) => {
         i18n.changeLanguage(lng);
+        setCurrentLang(t(`lang.${lng}`));
     };
 
     // 語系下拉選單選項
