@@ -46,6 +46,20 @@ const menuList = [
     },
 ];
 
+const meList = [
+    {
+        type: 'account',
+        title: '設定和隱私',
+    },
+    {
+        type: 'management',
+        title: '文章和活動',
+    },
+    {
+        title: '登出',
+    },
+];
+
 function Header(props) {
     const { handleSkinChange } = props;
     const location = useLocation();
@@ -81,6 +95,7 @@ function Header(props) {
 
     return (
         <HeaderContainer>
+            {/* 選單 */}
             <Menu
                 onClick={(e) => setCurrent(e.key)}
                 selectedKeys={[current]}
@@ -97,19 +112,21 @@ function Header(props) {
                 <Menu.SubMenu
                     key="SubMenu"
                     icon={<SettingOutlined />}
-                    title="Navigation Three - Submenu"
+                    title="我"
                 >
-                    <Menu.ItemGroup title="Item 1">
-                        <Menu.Item key="setting:1">Option 1</Menu.Item>
-                        <Menu.Item key="setting:2">Option 2</Menu.Item>
+                    <Menu.ItemGroup title="帳戶">
+                        <Menu.Item key="setting:1">設定和隱私</Menu.Item>
+                        <Menu.Item key="setting:2">說明</Menu.Item>
+                        <Menu.Item key="setting:3">預言</Menu.Item>
                     </Menu.ItemGroup>
-                    <Menu.ItemGroup title="Item 2">
-                        <Menu.Item key="setting:3">Option 3</Menu.Item>
-                        <Menu.Item key="setting:4">Option 4</Menu.Item>
+                    <Menu.ItemGroup title="管理">
+                        <Menu.Item key="setting:4">文章和活動</Menu.Item>
+                        <Menu.Item key="setting:5">職缺廣告帳戶</Menu.Item>
                     </Menu.ItemGroup>
                 </Menu.SubMenu>
             </Menu>
 
+            {/* 亮色暗色切換 */}
             <Switch
                 checkedChildren={<Sun />}
                 unCheckedChildren={<Moon />}
@@ -117,6 +134,7 @@ function Header(props) {
                 onChange={(e) => handleSkinChange(e)}
             />
 
+            {/* 語系切換 */}
             <Dropdown overlay={lngMenu} trigger="click">
                 <div>{currentLang}</div>
             </Dropdown>
