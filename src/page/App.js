@@ -1,5 +1,6 @@
 import React, { useEffect, Suspense, useState } from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { routes } from '@route';
 import { GlobalStyle } from '@assets/css/GlobalStyle';
 import { ThemeProvider } from 'styled-components';
@@ -14,8 +15,10 @@ function Page(props) {
     return <>{props.children}</>;
 }
 
-function App() {
+function App(props) {
     const [themeSkin, setThemeSkin] = useState(true);
+
+    console.log('props', props);
 
     function handleSkinChange(e) {
         setThemeSkin(e);
@@ -53,4 +56,8 @@ function App() {
     );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+    isLogin: state.isLogin,
+});
+
+export default connect(mapStateToProps)(App);
