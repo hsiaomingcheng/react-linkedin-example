@@ -27,3 +27,6 @@ icon 使用 iconfont 的 svg 圖檔
 
 2020/11/16
 新增 Card 卡片元件
+
+2020/11/17
+新增 axios 呼叫 api 方法，react-redux 管理狀態

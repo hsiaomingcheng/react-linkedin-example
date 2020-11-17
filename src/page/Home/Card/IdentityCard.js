@@ -1,16 +1,17 @@
 import React from 'react';
 import styled from 'styled-components/macro';
+import avatarLocal from '@assets/image/avatar.png';
 
-function IdentityCard() {
+function IdentityCard(props) {
     return (
         <Container>
             <div className="info-box seperate-line card-padding">
                 <img
                     className="avatar"
-                    src="https://media-exp1.licdn.com/dms/image/C5103AQGvRmyxIzcbIQ/profile-displayphoto-shrink_100_100/0?e=1611187200&v=beta&t=hiuoOignDa1HBaEbJnEPTO9OmcjwKbfHQVbJFF2Kj6A"
+                    src={props.avatar ? props.avatar : avatarLocal}
                 />
-                <p className="title">Ming-Cheng Hsiao</p>
-                <p className="sub-title">front-end web developer 前端工程師</p>
+                <p className="name">{props.userName}</p>
+                <p className="title">{props.userTitle}</p>
             </div>
 
             <a
@@ -47,15 +48,16 @@ const Container = styled.div`
         .avatar {
             border-radius: 50%;
             border: solid 2px #fff;
+            background: #fff;
             width: 72px;
             height: 72px;
         }
-        .title {
+        .name {
             font-size: 17px;
             font-weight: 600;
             line-height: 24px;
         }
-        .sub-title {
+        .title {
             font-size: 13px;
             line-height: 16px;
             color: rgba(0, 0, 0, 0.6);

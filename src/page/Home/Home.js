@@ -1,15 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components/macro';
 import Card from '@component/Card';
 import { IdentityCard, Artdeco } from './Card';
+import { apiUserInfo } from '@apis';
+import { getUserInfo } from '@actions/userAction';
 
 function Home(props) {
-    console.log('props', props);
+    // 拿取會員資料
+    useEffect(() => {
+        const { getUserInfo } = props;
+
+        apiUserInfo().then(function (response) {
+            // handle success
+            getUserInfo(response.data);
+        });
+    }, []);
+
     return (
         <Container>
             <LeftContent>
                 <Card>
-                    <IdentityCard />
+                    <IdentityCard
+                        avatar={props.userInfo.avatar}
+                        userName={props.userInfo.userName}
+                        userTitle={props.userInfo.userTitle}
+                    />
                 </Card>
 
                 <Card>
@@ -26,7 +42,17 @@ function Home(props) {
     );
 }
 
-export default Home;
+const mapStateToProps = (state) => ({
+    userInfo: state.userInfo,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    getUserInfo: (e) => {
+        dispatch(getUserInfo(e));
+    },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
 const Container = styled.div`
     display: flex;
