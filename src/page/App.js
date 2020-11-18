@@ -7,6 +7,16 @@ import { ThemeProvider } from 'styled-components';
 import theme from '@assets/theme';
 import Header from '@component/Header';
 
+const Login = {
+    name: '登入頁',
+    path: '/login',
+    component: React.lazy(() =>
+        import(
+            /*webpackChunkName:"Login"*/ /*webpackMode:"lazy"*/ '@page/Login/Login'
+        )
+    ),
+};
+
 function Page(props) {
     useEffect(() => {
         document.title = props.title || 'linkedIn';
@@ -28,29 +38,39 @@ function App(props) {
         <>
             <ThemeProvider theme={themeSkin ? theme.light : theme.dark}>
                 <GlobalStyle />
-                <Router>
-                    <Header handleSkinChange={handleSkinChange} />
+                {props.isLogin ? (
+                    <Router>
+                        <Header handleSkinChange={handleSkinChange} />
+                        <Suspense fallback={<h1>Loading profile...</h1>}>
+                            <Switch>
+                                {routes.map((route, index) => {
+                                    return (
+                                        <Route
+                                            key={index}
+                                            path={route.path}
+                                            exact={route.exact}
+                                            render={(props) => (
+                                                <Page
+                                                    title={
+                                                        'linkedIn-' + route.name
+                                                    }
+                                                >
+                                                    <route.component
+                                                        {...props}
+                                                    />
+                                                </Page>
+                                            )}
+                                        />
+                                    );
+                                })}
+                            </Switch>
+                        </Suspense>
+                    </Router>
+                ) : (
                     <Suspense fallback={<h1>Loading profile...</h1>}>
-                        <Switch>
-                            {routes.map((route, index) => {
-                                return (
-                                    <Route
-                                        key={index}
-                                        path={route.path}
-                                        exact={route.exact}
-                                        render={(props) => (
-                                            <Page
-                                                title={'linkedIn-' + route.name}
-                                            >
-                                                <route.component {...props} />
-                                            </Page>
-                                        )}
-                                    />
-                                );
-                            })}
-                        </Switch>
+                        <Login.component />
                     </Suspense>
-                </Router>
+                )}
             </ThemeProvider>
         </>
     );
