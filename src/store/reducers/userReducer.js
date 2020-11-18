@@ -1,4 +1,4 @@
-import { USER_INFO } from '@actions/userAction';
+import { USER_INFO, LOGIN_INFO } from '@actions/userAction';
 
 // 使用者資訊
 export function userInfo(state = {}, action) {
@@ -11,10 +11,10 @@ export function userInfo(state = {}, action) {
 }
 
 // 登入資訊
-export function isLogin(state = false, action) {
+export function loginInfo(state = { success: false }, action) {
     switch (action.loginInfo) {
-        case USER_INFO:
-            return action.success;
+        case LOGIN_INFO:
+            return action;
         default:
             return state;
     }
