@@ -11,7 +11,7 @@ export function userInfo(state = {}, action) {
 }
 
 // 登入資訊
-export function loginInfo(state = { success: false }, action) {
+export function loginInfo(state = {}, action) {
     switch (action.loginInfo) {
         case LOGIN_INFO:
             return action;
