@@ -11,10 +11,10 @@ export function userInfo(state = {}, action) {
 }
 
 // 登入資訊
-export function loginInfo(state = {}, action) {
-    switch (action.loginInfo) {
+export function loginInfo(state = { success: false }, action) {
+    switch (action.type) {
         case LOGIN_INFO:
-            return action;
+            return action.data;
         default:
             return state;
     }

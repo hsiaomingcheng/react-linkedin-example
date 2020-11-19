@@ -93,8 +93,6 @@ function Header(props) {
         </Menu>
     );
 
-    console.log('123');
-
     return (
         <HeaderContainer>
             {/* 選單 */}

@@ -2,6 +2,7 @@ import React, { useEffect, Suspense, useState } from 'react';
 import { Route, useHistory } from 'react-router-dom';
 import { GlobalStyle } from '@assets/css/GlobalStyle';
 import { ThemeProvider } from 'styled-components';
+import { useSelector } from 'react-redux';
 import theme from '@assets/theme';
 import Header from '@component/Header';
 import IndexLayout from '@page/IndexLayout/IndexLayout';
@@ -28,10 +29,12 @@ function Page(props) {
 function App() {
     let history = useHistory();
 
+    // 使用 useSelector 取出 Store 保管的 state
+    const loginInfo = useSelector((state) => state.loginInfo);
+    const isLogin = loginInfo.success;
+
     // 皮膚顏色
     const [themeSkin, setThemeSkin] = useState(true);
-
-    const [isLogin, setIsLogin] = useState(false);
 
     function handleSkinChange(e) {
         setThemeSkin(e);
@@ -39,7 +42,6 @@ function App() {
 
     useEffect(() => {
         if (!isLogin) {
-            console.log('history', history);
             history.replace('/login');
         }
     }, []);

@@ -1,9 +1,18 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { Form, Input, Button } from 'antd';
+import { apiLogin } from '@apis';
+import { disPatchLoginInfo } from '@actions/userAction';
+import { useDispatch } from 'react-redux';
 
 function Login() {
+    const dispatch = useDispatch();
+
     const onFinish = (values) => {
+        apiLogin().then(function (response) {
+            // handle success
+            dispatch(disPatchLoginInfo(response.data));
+        });
         console.log('Success:', values);
     };
 
