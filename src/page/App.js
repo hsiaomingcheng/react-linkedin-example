@@ -1,18 +1,10 @@
 import React, { useEffect, Suspense, useState } from 'react';
-import {
-    Route,
-    Switch,
-    BrowserRouter as Router,
-    Redirect,
-} from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { routes } from '@route';
+import { Route, useHistory } from 'react-router-dom';
 import { GlobalStyle } from '@assets/css/GlobalStyle';
 import { ThemeProvider } from 'styled-components';
 import theme from '@assets/theme';
 import Header from '@component/Header';
-import { apiLogin } from '@apis';
-import { disPatchLoginInfo } from '@actions/userAction';
+import IndexLayout from '@page/IndexLayout/IndexLayout';
 
 const Login = {
     name: '登入頁',
@@ -34,10 +26,7 @@ function Page(props) {
 }
 
 function App() {
-    // 使用 useSelector 取出 Store 保管的 state
-    // const loginInfo = useSelector((state) => state.loginInfo);
-
-    // console.log('loginInfo', loginInfo);
+    let history = useHistory();
 
     // 皮膚顏色
     const [themeSkin, setThemeSkin] = useState(true);
@@ -48,63 +37,34 @@ function App() {
         setThemeSkin(e);
     }
 
-    // didMount
-    // useEffect(() => {
-    //     apiLogin().then(function (response) {
-    //         // handle success
-    //         disPatchLoginInfo(response.data);
-    //         setIsLogin(response.data.success);
-    //     });
-    // }, []);
+    useEffect(() => {
+        if (!isLogin) {
+            console.log('history', history);
+            history.replace('/login');
+        }
+    }, []);
 
     return (
         <>
             <ThemeProvider theme={themeSkin ? theme.light : theme.dark}>
                 <GlobalStyle />
-                <Router>
-                    {isLogin && <Header handleSkinChange={handleSkinChange} />}
+                {isLogin ? (
+                    <>
+                        <Header handleSkinChange={handleSkinChange} />
+                        <IndexLayout Page={Page} />
+                    </>
+                ) : (
                     <Suspense fallback={<h1>Loading profile...</h1>}>
-                        <Switch>
-                            <Route
-                                path="/login"
-                                render={() => (
-                                    <Page title={'linkedIn-' + Login.name}>
-                                        <Login.component />
-                                    </Page>
-                                )}
-                            />
-                            <Route
-                                render={() =>
-                                    isLogin ? (
-                                        routes.map((route, index) => {
-                                            return (
-                                                <Route
-                                                    key={index}
-                                                    path={route.path}
-                                                    exact={route.exact}
-                                                    render={(props) => (
-                                                        <Page
-                                                            title={
-                                                                'linkedIn-' +
-                                                                route.name
-                                                            }
-                                                        >
-                                                            <route.component
-                                                                {...props}
-                                                            />
-                                                        </Page>
-                                                    )}
-                                                />
-                                            );
-                                        })
-                                    ) : (
-                                        <Redirect to="/login" />
-                                    )
-                                }
-                            />
-                        </Switch>
+                        <Route
+                            path="/login"
+                            render={() => (
+                                <Page title={'linkedIn-' + Login.name}>
+                                    <Login.component />
+                                </Page>
+                            )}
+                        />
                     </Suspense>
-                </Router>
+                )}
             </ThemeProvider>
         </>
     );

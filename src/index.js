@@ -9,6 +9,11 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import rootReducer from '@reducers/rootReducer.js';
 
+import { BrowserRouter as Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+
+const customHistory = createBrowserHistory();
+
 /* eslint-disable no-underscore-dangle */
 const store = createStore(
     rootReducer /* preloadedState, */,
@@ -19,7 +24,9 @@ const store = createStore(
 ReactDOM.render(
     // <React.StrictMode>
     <Provider store={store}>
-        <App />
+        <Router history={customHistory}>
+            <App />
+        </Router>
     </Provider>,
     // </React.StrictMode>,
     document.getElementById('root')
