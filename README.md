@@ -41,4 +41,4 @@ icon 使用 iconfont 的 svg 圖檔
 修改 修改使用者是否登入的判斷，新增登入按鈕功能
 
 2020/11/20
-新增 新增 firebase 處理登入動作
+新增 新增 [firebase](https://react-firebase-js.com/) 處理登入動作
