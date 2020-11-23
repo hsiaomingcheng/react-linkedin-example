@@ -40,11 +40,16 @@ function App() {
         setThemeSkin(e);
     }
 
+    // 當isLogin(登入)狀態改變觸發
     useEffect(() => {
+        // false 導 登入頁
+        // true 導 首頁
         if (!isLogin) {
             history.replace('/login');
+        } else {
+            history.replace('/');
         }
-    }, []);
+    }, [isLogin]);
 
     return (
         <>
