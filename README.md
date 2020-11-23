@@ -43,5 +43,6 @@ icon 使用 iconfont 的 svg 圖檔
 2020/11/20
 新增 新增 [firebase](https://react-firebase-js.com/) 處理登入動作
 
-2020/11/23
-新增 登入狀態判斷導頁機制，未登入導登入頁，登入導首頁
+2020/11/23  
+新增 登入狀態判斷導頁機制，未登入導登入頁，登入導首頁  
+修改 修改 App 將皮膚判斷移至 IndexLayout

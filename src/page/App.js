@@ -1,10 +1,6 @@
-import React, { useEffect, Suspense, useState } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { Route, useHistory } from 'react-router-dom';
-import { GlobalStyle } from '@assets/css/GlobalStyle';
-import { ThemeProvider } from 'styled-components';
 import { useSelector } from 'react-redux';
-import theme from '@assets/theme';
-import Header from '@component/Header';
 import IndexLayout from '@page/IndexLayout/IndexLayout';
 
 const Login = {
@@ -33,13 +29,6 @@ function App() {
     const loginInfo = useSelector((state) => state.loginInfo);
     const isLogin = loginInfo.success;
 
-    // 皮膚顏色
-    const [themeSkin, setThemeSkin] = useState(true);
-
-    function handleSkinChange(e) {
-        setThemeSkin(e);
-    }
-
     // 當isLogin(登入)狀態改變觸發
     useEffect(() => {
         // false 導 登入頁
@@ -53,26 +42,21 @@ function App() {
 
     return (
         <>
-            <ThemeProvider theme={themeSkin ? theme.light : theme.dark}>
-                <GlobalStyle />
-                {isLogin ? (
-                    <>
-                        <Header handleSkinChange={handleSkinChange} />
-                        <IndexLayout Page={Page} />
-                    </>
-                ) : (
-                    <Suspense fallback={<h1>Loading profile...</h1>}>
-                        <Route
-                            path="/login"
-                            render={() => (
-                                <Page title={'linkedIn-' + Login.name}>
-                                    <Login.component />
-                                </Page>
-                            )}
-                        />
-                    </Suspense>
-                )}
-            </ThemeProvider>
+            {isLogin ? (
+                <IndexLayout Page={Page} />
+            ) : (
+                <Suspense fallback={<h1>Loading profile...</h1>}>
+                    <Route
+                        exact
+                        path="/login"
+                        render={() => (
+                            <Page title={'linkedIn-' + Login.name}>
+                                <Login.component />
+                            </Page>
+                        )}
+                    />
+                </Suspense>
+            )}
         </>
     );
 }
