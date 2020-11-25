@@ -5,6 +5,8 @@ import { apiLogin } from '@apis';
 import { disPatchLoginInfo } from '@actions/userAction';
 import { useDispatch } from 'react-redux';
 
+import { useHistory } from 'react-router-dom';
+
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { FirebaseAuthProvider } from '@react-firebase/auth';
@@ -22,20 +24,26 @@ const firebaseConfig = {
 
 function Login() {
     const dispatch = useDispatch();
+    let history = useHistory();
 
     const onFinish = (values) => {
         /*firebase方式*/
         firebase
             .auth()
             .signInWithEmailAndPassword(values.username, values.password)
-            .then(() => {
+            .then((e) => {
+                const uid = e.user.uid;
+
                 dispatch(
                     disPatchLoginInfo({
-                        success: true,
+                        success: uid,
                         type: '測試測試',
                     })
                 );
-                alert('恭喜 登入成功');
+
+                sessionStorage.setItem('uid', uid);
+
+                history.replace('/');
             })
             .catch(function (error) {
                 // Handle Errors here.

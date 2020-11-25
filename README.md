@@ -40,9 +40,12 @@ icon 使用 iconfont 的 svg 圖檔
 修改 未登入與登入路由判斷，待製作登入狀態切換  
 修改 修改使用者是否登入的判斷，新增登入按鈕功能
 
-2020/11/20
+2020/11/20  
 新增 新增 [firebase](https://react-firebase-js.com/) 處理登入動作
 
 2020/11/23  
 新增 登入狀態判斷導頁機制，未登入導登入頁，登入導首頁  
 修改 修改 App 將皮膚判斷移至 IndexLayout
+
+2020/11/25
+修改 修改判斷改為 isLogin + uid(redux + sessionStorage)方式，待優化 Header 元件 render 次數

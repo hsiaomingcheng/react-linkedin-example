@@ -1,5 +1,5 @@
 import React, { useEffect, Suspense } from 'react';
-import { Route, useHistory } from 'react-router-dom';
+import { Route, useHistory, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import IndexLayout from '@page/IndexLayout/IndexLayout';
 
@@ -24,27 +24,42 @@ function Page(props) {
 
 function App() {
     let history = useHistory();
+    const location = useLocation();
 
     // 使用 useSelector 取出 Store 保管的 state
     const loginInfo = useSelector((state) => state.loginInfo);
     const isLogin = loginInfo.success;
 
+    // 取使用者保存uid
+    const uid = sessionStorage.getItem('uid');
+
     // 當isLogin(登入)狀態改變觸發
     useEffect(() => {
-        // false 導 登入頁
-        // true 導 首頁
-        if (!isLogin) {
+        const loginPathname = '/login';
+        const locationPathname = location.pathname;
+
+        // 判斷 uid 或 登入狀態 與 網址路徑
+        if (!(uid || isLogin) && locationPathname !== loginPathname) {
+            console.log('我要去登入頁');
             history.replace('/login');
-        } else {
-            history.replace('/');
         }
-    }, [isLogin]);
+    });
 
     return (
         <>
-            {isLogin ? (
-                <IndexLayout Page={Page} />
-            ) : (
+            <IndexLayout Page={Page} />
+            <Suspense fallback={<h1>Loading profile...</h1>}>
+                <Route
+                    exact
+                    path="/login"
+                    render={() => (
+                        <Page title={'linkedIn-' + Login.name}>
+                            <Login.component />
+                        </Page>
+                    )}
+                />
+            </Suspense>
+            {/* {location.pathname === '/login' ? (
                 <Suspense fallback={<h1>Loading profile...</h1>}>
                     <Route
                         exact
@@ -56,7 +71,9 @@ function App() {
                         )}
                     />
                 </Suspense>
-            )}
+            ) : (
+                <IndexLayout Page={Page} />
+            )} */}
         </>
     );
 }

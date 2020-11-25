@@ -65,6 +65,8 @@ function Header(props) {
     const location = useLocation();
     const { t, i18n } = useTranslation();
 
+    console.log('123');
+
     const [currentLang, setCurrentLang] = useState(t('lang.zh-TW'));
 
     // 判斷如果pathname為/，就帶入'home'，其他則把pathname最前面的/移除
