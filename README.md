@@ -52,4 +52,5 @@ icon 使用 iconfont 的 svg 圖檔
 
 2020/11/27  
 新增 IndexLayout 套用 memo 減少 re-render  
-新增 更新 header 樣式
+新增 更新 header 樣式  
+測試 git user.name 切換
