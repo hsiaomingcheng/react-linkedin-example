@@ -47,7 +47,7 @@ function App() {
 
     return (
         <>
-            <IndexLayout Page={Page} />
+            {(isLogin || uid) && <IndexLayout Page={Page} />}
             <Suspense fallback={<h1>Loading profile...</h1>}>
                 <Route
                     exact

@@ -6,6 +6,7 @@ import {
     MailOutlined,
     AppstoreOutlined,
     SettingOutlined,
+    CaretDownOutlined,
 } from '@ant-design/icons';
 import Moon from '@icon/header/moon.svg';
 import Sun from '@icon/header/sun.svg';
@@ -65,8 +66,6 @@ function Header(props) {
     const location = useLocation();
     const { t, i18n } = useTranslation();
 
-    console.log('123');
-
     const [currentLang, setCurrentLang] = useState(t('lang.zh-TW'));
 
     // 判斷如果pathname為/，就帶入'home'，其他則把pathname最前面的/移除
@@ -97,49 +96,56 @@ function Header(props) {
 
     return (
         <HeaderContainer>
-            {/* 選單 */}
-            <Menu
-                onClick={(e) => setCurrent(e.key)}
-                selectedKeys={[current]}
-                mode="horizontal"
-                triggerSubMenuAction="click"
-            >
-                {menuList.map((item) => {
-                    return (
-                        <Menu.Item key={item.type} icon={item.svg}>
-                            <NavLink to={item.route}>{t(item.text)}</NavLink>
-                        </Menu.Item>
-                    );
-                })}
-                <Menu.SubMenu
-                    key="SubMenu"
-                    icon={<SettingOutlined />}
-                    title="我"
+            <div className="content">
+                {/* 選單 */}
+                <Menu
+                    onClick={(e) => setCurrent(e.key)}
+                    selectedKeys={[current]}
+                    mode="horizontal"
+                    triggerSubMenuAction="click"
                 >
-                    <Menu.ItemGroup title="帳戶">
-                        <Menu.Item key="setting:1">設定和隱私</Menu.Item>
-                        <Menu.Item key="setting:2">說明</Menu.Item>
-                        <Menu.Item key="setting:3">預言</Menu.Item>
-                    </Menu.ItemGroup>
-                    <Menu.ItemGroup title="管理">
-                        <Menu.Item key="setting:4">文章和活動</Menu.Item>
-                        <Menu.Item key="setting:5">職缺廣告帳戶</Menu.Item>
-                    </Menu.ItemGroup>
-                </Menu.SubMenu>
-            </Menu>
+                    {menuList.map((item) => {
+                        return (
+                            <Menu.Item key={item.type} icon={item.svg}>
+                                <NavLink to={item.route}>
+                                    {t(item.text)}
+                                </NavLink>
+                            </Menu.Item>
+                        );
+                    })}
+                    <Menu.SubMenu
+                        key="SubMenu"
+                        icon={<SettingOutlined />}
+                        title="我"
+                    >
+                        <Menu.ItemGroup title="帳戶">
+                            <Menu.Item key="setting:1">設定和隱私</Menu.Item>
+                            <Menu.Item key="setting:2">說明</Menu.Item>
+                            <Menu.Item key="setting:3">預言</Menu.Item>
+                        </Menu.ItemGroup>
+                        <Menu.ItemGroup title="管理">
+                            <Menu.Item key="setting:4">文章和活動</Menu.Item>
+                            <Menu.Item key="setting:5">職缺廣告帳戶</Menu.Item>
+                        </Menu.ItemGroup>
+                    </Menu.SubMenu>
+                </Menu>
 
-            {/* 亮色暗色切換 */}
-            <Switch
-                checkedChildren={<Sun />}
-                unCheckedChildren={<Moon />}
-                defaultChecked
-                onChange={(e) => handleSkinChange(e)}
-            />
+                {/* 亮色暗色切換 */}
+                <Switch
+                    checkedChildren={<Sun />}
+                    unCheckedChildren={<Moon />}
+                    defaultChecked
+                    onChange={(e) => handleSkinChange(e)}
+                />
 
-            {/* 語系切換 */}
-            <Dropdown overlay={lngMenu} trigger="click">
-                <div>{currentLang}</div>
-            </Dropdown>
+                {/* 語系切換 */}
+                <Dropdown overlay={lngMenu} trigger="click">
+                    <div>
+                        {currentLang}
+                        <CaretDownOutlined />
+                    </div>
+                </Dropdown>
+            </div>
         </HeaderContainer>
     );
 }
@@ -147,9 +153,19 @@ function Header(props) {
 export default Header;
 
 const HeaderContainer = styled.div`
-    display: flex;
     padding: 0 30px;
     background: ${(props) => props.theme.header.backgroundColor};
+
+    .content {
+        display: flex;
+        align-items: center;
+        margin: 0 auto;
+        width: 1130px;
+    }
+
+    .ant-menu {
+        margin-right: auto;
+    }
 
     .ant-menu-horizontal {
         border-bottom: none;
@@ -160,5 +176,16 @@ const HeaderContainer = styled.div`
     .ant-menu-submenu-title,
     .anticon {
         color: ${(props) => props.theme.primaryTextColor};
+    }
+
+    .ant-switch-inner {
+        font-size: 20px;
+    }
+
+    .ant-dropdown-trigger {
+        margin-left: 20px;
+        .anticon {
+            margin-left: 5px;
+        }
     }
 `;

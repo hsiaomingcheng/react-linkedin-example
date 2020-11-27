@@ -49,3 +49,7 @@ icon 使用 iconfont 的 svg 圖檔
 
 2020/11/25
 修改 修改判斷改為 isLogin + uid(redux + sessionStorage)方式，待優化 Header 元件 render 次數
+
+2020/11/27  
+新增 IndexLayout 套用 memo 減少 re-render  
+新增 更新 header 樣式

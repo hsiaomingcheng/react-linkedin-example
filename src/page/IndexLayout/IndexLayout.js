@@ -48,4 +48,4 @@ function IndexLayout(props) {
     );
 }
 
-export default IndexLayout;
+export default React.memo(IndexLayout);
