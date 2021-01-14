@@ -1,6 +1,9 @@
 # react-linkedin-example
 
 這是一個練習專案
+登入帳號: test123@gmail.com
+登入密碼: a123456
+---
 
 `create-react-app 4.0`
 
